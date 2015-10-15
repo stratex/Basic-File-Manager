@@ -21,10 +21,7 @@ namespace Simple_Filemanager
             listDir.View = View.Details;
             listDir.Columns.Add("Date Modified");
             listDir.Columns.Add("Filesize");
-            foreach (string item in GetLogicalDrives())
-            {
-                comboDrive.Items.Add(item);
-            }
+            GetLogicalDrives();
             comboDrive.SelectedItem = dir;
             FullDirList(new DirectoryInfo(comboDrive.Text + txtAddress.Text));
         }
@@ -46,21 +43,16 @@ namespace Simple_Filemanager
             catch { return; }
             listDir.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
         }
-        private List<string> GetLogicalDrives()
+        private void GetLogicalDrives()
         {
-            List<string> DriveList = new List<string>();
             try
             {
                 string[] drives = Directory.GetLogicalDrives();
 
                 foreach (string drive in drives)
-                {
-                    DriveList.Add(drive);
-                }
+                    comboDrive.Items.Add(drive);
             }
-            catch
-            { }
-            return DriveList;
+            catch { return; }
         }
 
         private void listDir_DoubleClick(object sender, EventArgs e)
