@@ -65,14 +65,18 @@ namespace Simple_Filemanager
 
         private void listDir_DoubleClick(object sender, EventArgs e)
         {
-            FileAttributes attr = File.GetAttributes(comboDrive.Text + txtAddress.Text + listDir.SelectedItems[0].Text);
-            if (attr.HasFlag(FileAttributes.Directory))
+            try
             {
-                txtAddress.Text += listDir.SelectedItems[0].Text + @"\";
-                FullDirList(new DirectoryInfo(comboDrive.Text + txtAddress.Text));
+                FileAttributes attr = File.GetAttributes(comboDrive.Text + txtAddress.Text + listDir.SelectedItems[0].Text);
+                if (attr.HasFlag(FileAttributes.Directory))
+                {
+                    txtAddress.Text += listDir.SelectedItems[0].Text + @"\";
+                    FullDirList(new DirectoryInfo(comboDrive.Text + txtAddress.Text));
+                }
+                else
+                    Process.Start(comboDrive.Text + txtAddress.Text + listDir.SelectedItems[0].Text);
             }
-            else
-                Process.Start(comboDrive.Text + txtAddress.Text + listDir.SelectedItems[0].Text);
+            catch { return; }
         }
         
 
