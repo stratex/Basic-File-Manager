@@ -26,41 +26,27 @@ namespace Simple_Filemanager
                 comboDrive.Items.Add(item);
             }
             comboDrive.SelectedItem = dir;
-
-            DirectoryInfo di = new DirectoryInfo(dir);
-            FullDirList(di);
-            foreach (DirectoryInfo folder in folders)
-                listDir.Items.Add(new ListViewItem(new string[] { folder.Name, folder.LastWriteTimeUtc.ToShortDateString(), "Folder" }));
-            foreach (FileInfo file in files)
-                listDir.Items.Add(new ListViewItem(new string[] { file.Name, file.LastWriteTimeUtc.ToShortDateString(), (file.Length / 1000).ToString() + "kb" }));
-            listDir.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+            FullDirList(new DirectoryInfo(comboDrive.Text + txtAddress.Text));
         }
 
-        static List<FileInfo> files = new List<FileInfo>();  // List that will hold the files and subfiles in path
-        static List<DirectoryInfo> folders = new List<DirectoryInfo>(); // List that hold direcotries that cannot be accessed
-        static void FullDirList(DirectoryInfo dir)
+        private void FullDirList(DirectoryInfo dir)
         {
-            files.Clear();
-            folders.Clear();
+            listDir.Items.Clear();
             try
             {
                 foreach (FileInfo f in dir.GetFiles())
-                {
-                    files.Add(f);
-                }
+                    listDir.Items.Add(new ListViewItem(new string[] { f.Name, f.LastWriteTimeUtc.ToShortDateString(), (f.Length / 1000).ToString() + "kb" }));
             }
-            catch
-            {
-                return;
-            }
+            catch { return; }
 
-            foreach (DirectoryInfo d in dir.GetDirectories())
-            {
-                folders.Add(d);
+            try {
+                foreach (DirectoryInfo d in dir.GetDirectories())
+                    listDir.Items.Add(new ListViewItem(new string[] { d.Name, d.LastWriteTimeUtc.ToShortDateString(), "Folder" }));
             }
-
+            catch { return; }
+            listDir.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
         }
-        public List<string> GetLogicalDrives()
+        private List<string> GetLogicalDrives()
         {
             List<string> DriveList = new List<string>();
             try
@@ -83,31 +69,16 @@ namespace Simple_Filemanager
             if (attr.HasFlag(FileAttributes.Directory))
             {
                 txtAddress.Text += listDir.SelectedItems[0].Text + @"\";
-                DirectoryInfo dir = new DirectoryInfo(comboDrive.Text + txtAddress.Text);
-                FullDirList(dir);
-                listDir.Items.Clear();
-                foreach (DirectoryInfo folder in folders)
-                    listDir.Items.Add(new ListViewItem(new string[] { folder.Name, folder.LastWriteTimeUtc.ToShortDateString(), "Folder" }));
-                foreach (FileInfo file in files)
-                    listDir.Items.Add(new ListViewItem(new string[] { file.Name, file.LastWriteTimeUtc.ToShortDateString(), (file.Length / 1000).ToString() + "kb" }));
-                listDir.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+                FullDirList(new DirectoryInfo(comboDrive.Text + txtAddress.Text));
             }
             else
                 Process.Start(comboDrive.Text + txtAddress.Text + listDir.SelectedItems[0].Text);
-            //File.Open(comboDrive.Text + txtAddress.Text + listDir.SelectedItems[0].Text, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite);
         }
         
 
         private void cmdGo_Click(object sender, EventArgs e)
         {
-            DirectoryInfo dir = new DirectoryInfo(comboDrive.Text + txtAddress.Text);
-            FullDirList(dir);
-            listDir.Items.Clear();
-            foreach (DirectoryInfo folder in folders)
-                listDir.Items.Add(new ListViewItem(new string[] { folder.Name, folder.LastWriteTimeUtc.ToShortDateString(), "Folder"}));
-            foreach (FileInfo file in files)
-                listDir.Items.Add(new ListViewItem(new string[] { file.Name, file.LastWriteTimeUtc.ToShortDateString(), (file.Length / 1000).ToString() + "kb" }));
-            listDir.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+            FullDirList(new DirectoryInfo(comboDrive.Text + txtAddress.Text));
         }
 
         private void comboDrive_SelectedIndexChanged(object sender, EventArgs e)
