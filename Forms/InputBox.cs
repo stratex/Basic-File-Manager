@@ -4,12 +4,12 @@ namespace Simple_Filemanager
 {
     public partial class frmInput : Form
     {
-        private frmMain obj;
+        private frmMain _obj;
         private FileAction _action;
         public frmInput(frmMain frmObject, string title, string msg, FileAction action)
         {
             InitializeComponent();
-            obj = frmObject;
+            _obj = frmObject;
             this.Text = title;
             lblInfo.Text = msg;
             _action = action;
@@ -19,7 +19,7 @@ namespace Simple_Filemanager
 
         private void cmdSubmit_Click(object sender, System.EventArgs e)
         {
-            obj.HandleInput(txtInput.Text, _action);
+            _obj.HandleAction(txtInput.Text, _action);
             this.Close();
         }
 
