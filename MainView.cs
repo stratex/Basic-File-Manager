@@ -24,14 +24,14 @@ namespace Simple_Filemanager
             listDir.Items.Clear();
             try
             {
-                foreach (FileInfo f in dir.GetFiles())
-                    listDir.Items.Add(new ListViewItem(new string[] { f.Name, f.LastWriteTimeUtc.ToShortDateString(), (f.Length / 1000).ToString() + "kb" }));
-            }
-            catch { return; }
-
-            try {
                 foreach (DirectoryInfo d in dir.GetDirectories())
                     listDir.Items.Add(new ListViewItem(new string[] { d.Name, d.LastWriteTimeUtc.ToShortDateString(), "Folder" }));
+            }
+            catch { return; }
+            try
+            {
+                foreach (FileInfo f in dir.GetFiles())
+                    listDir.Items.Add(new ListViewItem(new string[] { f.Name, f.LastWriteTimeUtc.ToShortDateString(), (f.Length / 1000).ToString() + "kb" }));
             }
             catch { return; }
             listDir.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
