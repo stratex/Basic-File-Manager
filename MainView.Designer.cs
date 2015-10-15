@@ -29,10 +29,11 @@
         private void InitializeComponent()
         {
             this.listDir = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.txtAddress = new System.Windows.Forms.TextBox();
             this.cmdGo = new System.Windows.Forms.Button();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.comboDrive = new System.Windows.Forms.ComboBox();
+            this.cmdBack = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // listDir
@@ -49,14 +50,19 @@
             this.listDir.UseCompatibleStateImageBehavior = false;
             this.listDir.DoubleClick += new System.EventHandler(this.listDir_DoubleClick);
             // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Name";
+            // 
             // txtAddress
             // 
             this.txtAddress.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtAddress.Location = new System.Drawing.Point(68, 12);
+            this.txtAddress.Location = new System.Drawing.Point(122, 12);
             this.txtAddress.Name = "txtAddress";
-            this.txtAddress.Size = new System.Drawing.Size(439, 20);
+            this.txtAddress.Size = new System.Drawing.Size(385, 20);
             this.txtAddress.TabIndex = 1;
+            this.txtAddress.Text = "\\";
             // 
             // cmdGo
             // 
@@ -69,24 +75,31 @@
             this.cmdGo.UseVisualStyleBackColor = true;
             this.cmdGo.Click += new System.EventHandler(this.cmdGo_Click);
             // 
-            // columnHeader1
-            // 
-            this.columnHeader1.Text = "Name";
-            // 
             // comboDrive
             // 
             this.comboDrive.FormattingEnabled = true;
-            this.comboDrive.Location = new System.Drawing.Point(12, 11);
+            this.comboDrive.Location = new System.Drawing.Point(66, 11);
             this.comboDrive.Name = "comboDrive";
             this.comboDrive.Size = new System.Drawing.Size(50, 21);
             this.comboDrive.TabIndex = 3;
             this.comboDrive.SelectedIndexChanged += new System.EventHandler(this.comboDrive_SelectedIndexChanged);
+            // 
+            // cmdBack
+            // 
+            this.cmdBack.Location = new System.Drawing.Point(12, 9);
+            this.cmdBack.Name = "cmdBack";
+            this.cmdBack.Size = new System.Drawing.Size(48, 23);
+            this.cmdBack.TabIndex = 4;
+            this.cmdBack.Text = "Back";
+            this.cmdBack.UseVisualStyleBackColor = true;
+            this.cmdBack.Click += new System.EventHandler(this.cmdBack_Click);
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(573, 381);
+            this.Controls.Add(this.cmdBack);
             this.Controls.Add(this.comboDrive);
             this.Controls.Add(this.cmdGo);
             this.Controls.Add(this.txtAddress);
@@ -105,6 +118,7 @@
         private System.Windows.Forms.TextBox txtAddress;
         private System.Windows.Forms.Button cmdGo;
         private System.Windows.Forms.ComboBox comboDrive;
+        private System.Windows.Forms.Button cmdBack;
     }
 }
 

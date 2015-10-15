@@ -7,7 +7,7 @@ namespace Simple_Filemanager
 {
     public partial class frmMain : Form
     {
-        string dir = @"C:\";
+        string dir = @"C:";
         public frmMain()
         {
             InitializeComponent();
@@ -43,7 +43,7 @@ namespace Simple_Filemanager
                 string[] drives = Directory.GetLogicalDrives();
 
                 foreach (string drive in drives)
-                    comboDrive.Items.Add(drive);
+                    comboDrive.Items.Add(drive.Replace(@"\", null));
             }
             catch { return; }
         }
@@ -74,6 +74,18 @@ namespace Simple_Filemanager
         {
             txtAddress.Focus();
             txtAddress.SelectAll();
+            FullDirList(new DirectoryInfo(comboDrive.Text + txtAddress.Text));
+        }
+
+        private void cmdBack_Click(object sender, EventArgs e)
+        {
+            if(txtAddress.TextLength > 1)
+                txtAddress.Text = txtAddress.Text.Remove(txtAddress.Text.Length - 1, 1);
+            if (txtAddress.Text.LastIndexOf(@"\") + 1 > 0)
+            {
+                txtAddress.Text = txtAddress.Text.Substring(0, txtAddress.Text.LastIndexOf(@"\") + 1);
+                FullDirList(new DirectoryInfo(comboDrive.Text + txtAddress.Text));
+            }
         }
     }
 }
