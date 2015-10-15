@@ -28,12 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.listDir = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.txtAddress = new System.Windows.Forms.TextBox();
             this.cmdGo = new System.Windows.Forms.Button();
             this.comboDrive = new System.Windows.Forms.ComboBox();
             this.cmdBack = new System.Windows.Forms.Button();
+            this.contextDir = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.addFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextDir.SuspendLayout();
             this.SuspendLayout();
             // 
             // listDir
@@ -43,6 +49,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.listDir.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1});
+            this.listDir.ContextMenuStrip = this.contextDir;
             this.listDir.Location = new System.Drawing.Point(12, 38);
             this.listDir.Name = "listDir";
             this.listDir.Size = new System.Drawing.Size(549, 331);
@@ -94,6 +101,36 @@
             this.cmdBack.UseVisualStyleBackColor = true;
             this.cmdBack.Click += new System.EventHandler(this.cmdBack_Click);
             // 
+            // contextDir
+            // 
+            this.contextDir.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addFolderToolStripMenuItem,
+            this.addFileToolStripMenuItem,
+            this.deleteToolStripMenuItem});
+            this.contextDir.Name = "contextMenuStrip1";
+            this.contextDir.Size = new System.Drawing.Size(153, 92);
+            // 
+            // addFolderToolStripMenuItem
+            // 
+            this.addFolderToolStripMenuItem.Name = "addFolderToolStripMenuItem";
+            this.addFolderToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.addFolderToolStripMenuItem.Text = "Add Folder";
+            this.addFolderToolStripMenuItem.Click += new System.EventHandler(this.addFolderToolStripMenuItem_Click);
+            // 
+            // addFileToolStripMenuItem
+            // 
+            this.addFileToolStripMenuItem.Name = "addFileToolStripMenuItem";
+            this.addFileToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.addFileToolStripMenuItem.Text = "Add File";
+            this.addFileToolStripMenuItem.Click += new System.EventHandler(this.addFileToolStripMenuItem_Click);
+            // 
+            // deleteToolStripMenuItem
+            // 
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.deleteToolStripMenuItem.Text = "Delete...";
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -106,6 +143,7 @@
             this.Controls.Add(this.listDir);
             this.Name = "frmMain";
             this.Text = "Simple File Manager";
+            this.contextDir.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -119,6 +157,10 @@
         private System.Windows.Forms.Button cmdGo;
         private System.Windows.Forms.ComboBox comboDrive;
         private System.Windows.Forms.Button cmdBack;
+        private System.Windows.Forms.ContextMenuStrip contextDir;
+        private System.Windows.Forms.ToolStripMenuItem addFolderToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addFileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
     }
 }
 

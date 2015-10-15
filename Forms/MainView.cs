@@ -5,8 +5,15 @@ using System.Windows.Forms;
 
 namespace Simple_Filemanager
 {
+    public enum FileAction
+    {
+        NewFolder,
+        NewFile,
+        Delete
+    }
     public partial class frmMain : Form
     {
+        private frmInput InputBox;
         string dir = @"C:";
         public frmMain()
         {
@@ -34,7 +41,10 @@ namespace Simple_Filemanager
                     listDir.Items.Add(new ListViewItem(new string[] { f.Name, f.LastWriteTimeUtc.ToShortDateString(), (f.Length / 1000).ToString() + "kb" }));
             }
             catch { return; }
-            listDir.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+            if (listDir.Items.Count > 0)
+                listDir.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+            else
+                listDir.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
         }
         private void GetLogicalDrives()
         {
@@ -86,6 +96,54 @@ namespace Simple_Filemanager
                 txtAddress.Text = txtAddress.Text.Substring(0, txtAddress.Text.LastIndexOf(@"\") + 1);
                 FullDirList(new DirectoryInfo(comboDrive.Text + txtAddress.Text));
             }
+        }
+        public void HandleInput(string input, FileAction action)
+        {
+            switch (action)
+            {
+                case FileAction.NewFolder:
+                    {
+                        Directory.CreateDirectory(comboDrive.Text + txtAddress.Text + input);
+                        FullDirList(new DirectoryInfo(comboDrive.Text + txtAddress.Text));
+                        break;
+                    }
+                case FileAction.NewFile:
+                    {
+                        File.Create(comboDrive.Text + txtAddress.Text + input);
+                        FullDirList(new DirectoryInfo(comboDrive.Text + txtAddress.Text));
+                        break;
+                    }
+                case FileAction.Delete:
+                    {
+                        if (input.ToLower() == listDir.SelectedItems[0].Text.ToLower())
+                        {
+                            if (Directory.Exists(comboDrive.Text + txtAddress.Text + listDir.SelectedItems[0].Text))
+                                Directory.Delete(comboDrive.Text + txtAddress.Text + listDir.SelectedItems[0].Text);
+                            else if (File.Exists(comboDrive.Text + txtAddress.Text + listDir.SelectedItems[0].Text))
+                                File.Delete(comboDrive.Text + txtAddress.Text + listDir.SelectedItems[0].Text);
+                        }
+                        else
+                            MessageBox.Show("Error: File/Directory does not exsist.");
+                        FullDirList(new DirectoryInfo(comboDrive.Text + txtAddress.Text));
+                        break;
+                    }
+            }
+        }
+
+        //private void DeleteFile()
+        private void addFolderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            InputBox = new frmInput(this, "Add Folder", "Type the name of the folder:", FileAction.NewFolder);
+        }
+
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            InputBox = new frmInput(this, String.Format("Delete {0}?", listDir.SelectedItems[0].Text), "Please type the name of the folder as confirmation. This action cannot be undone.", FileAction.Delete);
+        }
+
+        private void addFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            InputBox = new frmInput(this, "Add File", "Type the name of the file (with ext):", FileAction.NewFile);
         }
     }
 }
